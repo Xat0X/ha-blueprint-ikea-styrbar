@@ -1,6 +1,6 @@
 blueprint:
   name: IKEA Styrbar - Control Multiple Lights/Switches
-  description: >
+  description: |
     # 🎛️ IKEA Styrbar - Multi-Device Controller (Z2M)
     
     Control multiple lights or switches with a single IKEA Styrbar remote using **Zigbee2MQTT**.
