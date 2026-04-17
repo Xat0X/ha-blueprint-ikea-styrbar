@@ -1,22 +1,29 @@
 blueprint:
-  name: IKEA Styrbar - control multiple Light/Switch Entities
+  name: IKEA Styrbar - Control Multiple Lights/Switches
   description: >
-    **Manage multiple Light/Switch Entities with the IKEA Styrbar Switch Remote via Zigbee2MQTT**
+    # 🎛️ IKEA Styrbar - Multi-Device Controller (Z2M)
     
-    Compatible with all Styrbar models: E2001, E2002, and the newer E2313.
+    Control multiple lights or switches with a single IKEA Styrbar remote using **Zigbee2MQTT**.
+    Instead of controlling all lights at once, use the ◀️ and ▶️ buttons to cycle through your devices!
 
-    _Release Notes_:
-
-    **Version 1.5** (2026-04-17):
-    - Added support for newer hardware revisions like the E2313 by relaxing device filters.
+    ### ✨ Key Features
+    * **Universal Support:** Works with models **E2001**, **E2002**, and the new AAA-battery **E2313**.
+    * **Visual Feedback:** The selected light blinks briefly so you know what you are controlling.
+    * **Advanced Dimming:** Smooth transition dimming & a threshold to prevent turning lights fully off.
+    * **Custom Actions:** Assign custom actions for long-presses on the arrow buttons.
     
-    **Version 1.4** (2025-10-28):
-    - Make smooth dimming transition max 2s.
-    - Add per-entity smooth dimming selection so only chosen lights use transition-based smooth dimming.
-    - Keep raw targets list (do not expand groups) so group entities are treated as single targets.
-    - Add option to prevent a lamp from being turned fully off while dimming, with a configurable threshold slider.
+    ### ⚙️ Requirement
+    You **must** create an `input_number` helper in Home Assistant (e.g., min: 0, max: 10, step: 1) to act as the remote's memory for the selected target.
+    
+    ### 🔗 Documentation & Support
+    For full instructions, the README, and updates, visit the [GitHub Repository](https://github.com/Xat0X/ha-blueprint-ikea-styrbar).
+
+    ---
+    
+    *Release Notes:*
+    - **v1.5 (2026-04-17):** Added support for newer hardware (E2313) by fixing the IKEA manufacturer device filter.
+    - **v1.4:** Added smooth dimming (max 2s), per-entity smooth dimming, raw target lists, and minimum dimming threshold.
   domain: automation
-  # Vervang de onderstaande URL door de definitieve link naar jouw GitHub bestand
   source_url: https://github.com/Xat0X/ha-blueprint-ikea-styrbar/blob/main/ikea_styrbar_multiple_entities.yaml
   input:
     switch_remote:
