@@ -25,6 +25,7 @@ blueprint:
       selector:
         device:
           integration: mqtt
+          manufacturer: IKEA
           multiple: false
     targets:
       name: Light/Switch
