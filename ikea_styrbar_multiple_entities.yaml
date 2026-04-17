@@ -1,32 +1,30 @@
 blueprint:
   name: IKEA Styrbar - Control Multiple Lights/Switches
   description: |
-    # 🎛️ IKEA Styrbar - Multi-Device Controller (Z2M)
-    
-    Control multiple lights or switches with a single IKEA Styrbar remote using **Zigbee2MQTT**.
-    Instead of controlling all lights at once, use the ◀️ and ▶️ buttons to cycle through your devices!
+    # IKEA Styrbar - Multi-Device Controller
 
-    ### ✨ Key Features
+    Control multiple lights or switches with a single IKEA Styrbar remote using Zigbee2MQTT. Instead of controlling all lights at once, use the left and right arrow buttons to cycle through your devices.
 
-    - **Universal Support:** Works with models **E2001**, **E2002**, and the new AAA-battery **E2313**.
-    - **Visual Feedback:** The selected light blinks briefly so you know what you are controlling.
-    - **Advanced Dimming:** Smooth transition dimming & a threshold to prevent turning lights fully off.
-    - **Custom Actions:** Assign custom actions for long-presses on the arrow buttons.
-    
-    ### ⚙️ Requirement
+    GitHub: [https://github.com/Xat0X/ha-blueprint-ikea-styrbar](https://github.com/Xat0X/ha-blueprint-ikea-styrbar)
 
-    You **must** create an `input_number` helper in Home Assistant (e.g., min: 0, max: 10, step: 1) to act as the remote's memory for the selected target.
-    
-    ### 🔗 Documentation & Support
+    ## Features
 
-    For full instructions, the README, and updates, visit the [GitHub Repository](https://github.com/Xat0X/ha-blueprint-ikea-styrbar).
+    * **Universal Support:** Works with models E2001, E2002, and the new AAA-battery E2313.
+    * **Visual Feedback:** The selected light blinks briefly so you know exactly what you are controlling.
+    * **Advanced Dimming:** Smooth transition dimming and a threshold to prevent turning lights fully off.
+    * **Custom Actions:** Assign custom actions for long-presses on the arrow buttons.
 
-    ---
-    
-    *Release Notes:*
+    ## Setup Guidance
 
-    - **v1.5 (2026-04-17):** Added support for newer hardware (E2313) by fixing the IKEA manufacturer device filter.
-    - **v1.4:** Added smooth dimming (max 2s), per-entity smooth dimming, raw target lists, and minimum dimming threshold.
+    1. Create an `input_number` helper via Settings -> Devices & Services -> Helpers.
+    2. Set the minimum to 0, maximum to 10 (or higher), and step size to 1.
+    3. Select this helper in the "Selected Light/Switch" setting below.
+    4. Select all the lights and switches you want to control in the "Light/Switch" target setting.
+
+    ## Requirements
+
+    * **Zigbee Integration:** Your IKEA Styrbar remote must be paired via Zigbee2MQTT.
+    * **Input Helper:** The `input_number` helper is strictly required to act as the remote's memory.
   domain: automation
   source_url: https://github.com/Xat0X/ha-blueprint-ikea-styrbar/blob/main/ikea_styrbar_multiple_entities.yaml
   input:
