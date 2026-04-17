@@ -27,7 +27,6 @@ blueprint:
           integration: mqtt
           manufacturer:
             - IKEA
-            - "IKEA of Sweden"
           multiple: false
     targets:
       name: Light/Switch
