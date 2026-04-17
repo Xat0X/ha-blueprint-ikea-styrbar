@@ -7,20 +7,24 @@ blueprint:
     Instead of controlling all lights at once, use the ◀️ and ▶️ buttons to cycle through your devices!
 
     ### ✨ Key Features
-    * **Universal Support:** Works with models **E2001**, **E2002**, and the new AAA-battery **E2313**.
-    * **Visual Feedback:** The selected light blinks briefly so you know what you are controlling.
-    * **Advanced Dimming:** Smooth transition dimming & a threshold to prevent turning lights fully off.
-    * **Custom Actions:** Assign custom actions for long-presses on the arrow buttons.
+
+    - **Universal Support:** Works with models **E2001**, **E2002**, and the new AAA-battery **E2313**.
+    - **Visual Feedback:** The selected light blinks briefly so you know what you are controlling.
+    - **Advanced Dimming:** Smooth transition dimming & a threshold to prevent turning lights fully off.
+    - **Custom Actions:** Assign custom actions for long-presses on the arrow buttons.
     
     ### ⚙️ Requirement
+
     You **must** create an `input_number` helper in Home Assistant (e.g., min: 0, max: 10, step: 1) to act as the remote's memory for the selected target.
     
     ### 🔗 Documentation & Support
+
     For full instructions, the README, and updates, visit the [GitHub Repository](https://github.com/Xat0X/ha-blueprint-ikea-styrbar).
 
     ---
     
     *Release Notes:*
+
     - **v1.5 (2026-04-17):** Added support for newer hardware (E2313) by fixing the IKEA manufacturer device filter.
     - **v1.4:** Added smooth dimming (max 2s), per-entity smooth dimming, raw target lists, and minimum dimming threshold.
   domain: automation
