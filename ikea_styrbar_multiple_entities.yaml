@@ -346,15 +346,14 @@ actions:
         - condition: template
           value_template: '{{ smooth_enabled }}'
         sequence:
-        - variables:
-            start_pct: >-
-              {{ (state_attr(target_entity_id, 'brightness') | int(0) * 100 / 255) | round(0) | int(0) }}
         - repeat:
             count: '{{ repeat_count | int(0) }}'
             sequence:
             - variables:
+                cur_brightness: >-
+                  {{ (state_attr(target_entity_id, 'brightness') | int(0) * 100 / 255) | round(0) }}
                 new_brightness: >-
-                  {{ [ start_pct + (smooth_step_pct | int(0)) * (repeat.index | int(0)), 100 ] | min }}
+                  {{ [ (cur_brightness | int(0)) + (smooth_step_pct | int(0)), 100 ] | min }}
             - action: light.turn_on
               data:
                 brightness_pct: '{{ new_brightness | int(0) }}'
@@ -388,17 +387,16 @@ actions:
         - condition: template
           value_template: '{{ smooth_enabled }}'
         sequence:
-        - variables:
-            start_pct: >-
-              {{ (state_attr(target_entity_id, 'brightness') | int(0) * 100 / 255) | round(0) | int(0) }}
-            off_threshold: >-
-              {% if prevent_turn_off_when_dimming %}{{ dimming_off_threshold_pct | int(0) }}{% else %}0{% endif %}
         - repeat:
             count: '{{ repeat_count | int(0) }}'
             sequence:
             - variables:
+                cur_brightness: >-
+                  {{ (state_attr(target_entity_id, 'brightness') | int(0) * 100 / 255) | round(0) }}
+                off_threshold: >-
+                  {% if prevent_turn_off_when_dimming %}{{ dimming_off_threshold_pct | int(0) }}{% else %}0{% endif %}
                 new_brightness: >-
-                  {{ [ start_pct - (smooth_step_pct | int(0)) * (repeat.index | int(0)), off_threshold | int(0) ] | max }}
+                  {{ [ (cur_brightness | int(0)) - (smooth_step_pct | int(0)), off_threshold | int(0) ] | max }}
             - action: light.turn_on
               data:
                 brightness_pct: '{{ new_brightness | int(0) }}'
