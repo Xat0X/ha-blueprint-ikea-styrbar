@@ -285,6 +285,8 @@ actions:
       {{ smooth_dimming and ((smooth_dimming_targets | list | count) == 0 or target_entity_id in (smooth_dimming_targets | list)) }}
     start_pct: >-
       {{ (state_attr(target_entity_id, 'brightness') | int(0) * 100 / 255) | round(0) | int(0) }}
+    supports_transition: >-
+      {{ state_attr(target_entity_id, 'supported_features') | int(0) | bitwise_and(1) > 0 }}
 
 - action: system_log.write
   data:
@@ -351,13 +353,24 @@ actions:
         - repeat:
             count: '{{ repeat_count | int(0) }}'
             sequence:
-            - action: light.turn_on
-              data:
-                brightness_pct: >-
-                  {{ [ start_pct + (smooth_step_pct | int(0)) * (repeat.index | int(0)), 100 ] | min }}
-                transition: '{{ dimming_transition }}'
-              target:
-                entity_id: '{{ target_entity_id }}'
+            - if:
+              - condition: template
+                value_template: '{{ supports_transition }}'
+              then:
+              - action: light.turn_on
+                data:
+                  brightness_pct: >-
+                    {{ [ start_pct + (smooth_step_pct | int(0)) * (repeat.index | int(0)), 100 ] | min }}
+                  transition: '{{ dimming_transition }}'
+                target:
+                  entity_id: '{{ target_entity_id }}'
+              else:
+              - action: light.turn_on
+                data:
+                  brightness_pct: >-
+                    {{ [ start_pct + (smooth_step_pct | int(0)) * (repeat.index | int(0)), 100 ] | min }}
+                target:
+                  entity_id: '{{ target_entity_id }}'
             - delay:
                 milliseconds: '{{ repeat_delay | int(0) }}'
       default:
@@ -388,14 +401,26 @@ actions:
         - repeat:
             count: '{{ repeat_count | int(0) }}'
             sequence:
-            - action: light.turn_on
-              data:
-                brightness_pct: >-
-                  {{ [ start_pct - (smooth_step_pct | int(0)) * (repeat.index | int(0)),
-                       (dimming_off_threshold_pct | int(0)) if prevent_turn_off_when_dimming else 0 ] | max }}
-                transition: '{{ dimming_transition }}'
-              target:
-                entity_id: '{{ target_entity_id }}'
+            - if:
+              - condition: template
+                value_template: '{{ supports_transition }}'
+              then:
+              - action: light.turn_on
+                data:
+                  brightness_pct: >-
+                    {{ [ start_pct - (smooth_step_pct | int(0)) * (repeat.index | int(0)),
+                         (dimming_off_threshold_pct | int(0)) if prevent_turn_off_when_dimming else 0 ] | max }}
+                  transition: '{{ dimming_transition }}'
+                target:
+                  entity_id: '{{ target_entity_id }}'
+              else:
+              - action: light.turn_on
+                data:
+                  brightness_pct: >-
+                    {{ [ start_pct - (smooth_step_pct | int(0)) * (repeat.index | int(0)),
+                         (dimming_off_threshold_pct | int(0)) if prevent_turn_off_when_dimming else 0 ] | max }}
+                target:
+                  entity_id: '{{ target_entity_id }}'
             - delay:
                 milliseconds: '{{ repeat_delay | int(0) }}'
       default:
